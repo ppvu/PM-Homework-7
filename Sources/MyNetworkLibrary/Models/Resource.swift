@@ -14,7 +14,7 @@ public struct Resourse {
     var headers: [String:String]?
     public init(method: HttpMethods,
                 url: URL?,
-                body: Data?
+                body: Data?,
                 headers: [String:String]?) {
         self.method = method
         self.url = url
