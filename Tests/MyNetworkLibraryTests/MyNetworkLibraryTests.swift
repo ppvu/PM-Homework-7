@@ -3,10 +3,10 @@ import XCTest
 
 final class NetworkServiceTests: XCTestCase {
     
-    let resourse = Resourse(method: .get, url: URL(string: "https://google.com.ua")!, body: nil, headers: [:])
+    let resourse = Resource(method: .get, url: URL(string: "https://google.com.ua")!, body: nil, headers: [:])
     
     func testRequest() {
-        let networkService = NetworkService()
+        let networkService = NetworkClient()
         networkService.request(resourse: resourse) { result in
             switch result {
             case .success(_):
@@ -18,7 +18,7 @@ final class NetworkServiceTests: XCTestCase {
     }
     
     func testValidation() {
-        let networkService = NetworkService()
+        let networkService = NetworkClient()
         networkService.request(resourse: resourse, validStatusCodes: 300..<600) { result in
             switch result {
             case .success(_):
@@ -40,8 +40,8 @@ final class NetworkServiceTests: XCTestCase {
                 case downloadURL = "download_url"
             }
         }
-        let resource = Resourse(method: .get, url: URL(string: "https://picsum.photos/id/0/info")!, body: nil, headers: [:])
-        let networkService = NetworkService()
+        let resource = Resource(method: .get, url: URL(string: "https://picsum.photos/id/0/info")!, body: nil, headers: [:])
+        let networkService = NetworkClient()
         networkService.requestDecoding(resourse: resource, decodingType: Photos.self) { result in
             switch result {
             case .success(_):

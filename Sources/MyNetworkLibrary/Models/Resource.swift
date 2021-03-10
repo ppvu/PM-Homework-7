@@ -7,11 +7,13 @@
 
 import Foundation
 
-public struct Resourse {
-    var method: HttpMethods
-    var url: URL?
-    var body: Data?
-    var headers: [String:String]?
+public struct Resource {
+    
+    let method: HttpMethods
+    let url: URL?
+    let body: Data?
+    let headers: [String:String]?
+    
     public init(method: HttpMethods,
                 url: URL?,
                 body: Data?,

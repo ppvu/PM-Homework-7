@@ -7,15 +7,17 @@
 
 import Foundation
 
-final public class NetworkService {
+final public class NetworkClient {
     private let defaultHeaders: [String:String]
     public init(defaultHeaders: [String:String] = [:]) {
         self.defaultHeaders = defaultHeaders
     }
 }
 
-public extension NetworkService {
-    func request(resourse: Resourse, validStatusCodes: Range<Int> = 200..<300, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+public extension NetworkClient {
+    func request(resourse: Resource,
+                 validStatusCodes: Range<Int> = 200..<300,
+                 completion: @escaping DataResponse) {
         guard let url = resourse.url else {
             completion(.failure(.badUrl))
             return
@@ -47,8 +49,11 @@ public extension NetworkService {
         }
         task.resume()
     }
-    
-    func requestDecoding<T: Decodable>(resourse: Resourse, decodingType: T.Type, validStatusCodes: Range<Int> = 200..<300, completion: @escaping (Result<T, NetworkError>) -> Void) {
+
+    func requestDecoding<T: Decodable>(resourse: Resource,
+                                       decodingType: T.Type,
+                                       validStatusCodes: Range<Int> = 200..<300,
+                                       completion: @escaping DataResponseDecoding<T>) {
         request(resourse: resourse, validStatusCodes: validStatusCodes) { result in
             switch result {
             case .success(let data):
